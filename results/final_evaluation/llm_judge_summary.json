@@ -1,0 +1,42 @@
+{
+    "judge_model": "openai/gpt-oss-20b",
+    "provider": "groq",
+    "total_rows_in_file": 244,
+    "valid_evaluations": 244,
+    "invalid_evaluations": 0,
+    "evaluation_scale": "1-5",
+    "metrics": {
+        "Qwen2.5-1.5B": {
+            "samples_evaluated": 62,
+            "fluency": 2.5484,
+            "coherence": 2.0806,
+            "relevance": 2.0968,
+            "code_mixing_quality": 2.7419,
+            "overall_quality": 2.0645
+        },
+        "Qwen2.5-3B": {
+            "samples_evaluated": 61,
+            "fluency": 2.459,
+            "coherence": 1.9672,
+            "relevance": 1.9344,
+            "code_mixing_quality": 2.8197,
+            "overall_quality": 1.918
+        },
+        "SmolLM2-1.7B": {
+            "samples_evaluated": 61,
+            "fluency": 2.2459,
+            "coherence": 1.8525,
+            "relevance": 1.7869,
+            "code_mixing_quality": 2.459,
+            "overall_quality": 1.8361
+        },
+        "Bharat-Tiny-LLM-v3": {
+            "samples_evaluated": 60,
+            "fluency": 2.2333,
+            "coherence": 1.6,
+            "relevance": 1.55,
+            "code_mixing_quality": 2.4167,
+            "overall_quality": 1.6667
+        }
+    }
+}

@@ -1,0 +1,146 @@
+{
+    "comparison": {
+        "model_1": "Qwen2.5-3B",
+        "model_2": "SmolLM2-1.7B",
+        "samples_model_1": 500,
+        "samples_model_2": 500,
+        "bootstrap_iterations": 1000,
+        "confidence_level": "95%"
+    },
+    "model_results": {
+        "Qwen2.5-3B": {
+            "distinct_1": {
+                "mean": 0.9181172345304291,
+                "lower_95_ci": 0.9139581096285132,
+                "upper_95_ci": 0.9226402733123478
+            },
+            "distinct_2": {
+                "mean": 0.9969809890599638,
+                "lower_95_ci": 0.9961201207263343,
+                "upper_95_ci": 0.9978873625515672
+            },
+            "repetition_rate": {
+                "mean": 0.08188276546957084,
+                "lower_95_ci": 0.0773597266876522,
+                "upper_95_ci": 0.08604189037148682
+            },
+            "language_mixing_ratio": {
+                "mean": 0.019369014369846477,
+                "lower_95_ci": 0.015397947325259372,
+                "upper_95_ci": 0.0237736815689463
+            },
+            "cmi": {
+                "mean": 1.9369014369846476,
+                "lower_95_ci": 1.5397947325259373,
+                "upper_95_ci": 2.3773681568946294
+            },
+            "unique_sentence_ratio": {
+                "mean": 0.9181172345304291,
+                "lower_95_ci": 0.9139581096285132,
+                "upper_95_ci": 0.9226402733123478
+            },
+            "avg_word_length": {
+                "mean": 4.422850733768186,
+                "lower_95_ci": 4.380731875973935,
+                "upper_95_ci": 4.4706665819747995
+            },
+            "generation_length": {
+                "mean": 34.092,
+                "lower_95_ci": 33.723949999999995,
+                "upper_95_ci": 34.47405
+            }
+        },
+        "SmolLM2-1.7B": {
+            "distinct_1": {
+                "mean": 0.9328026154021521,
+                "lower_95_ci": 0.928647451817734,
+                "upper_95_ci": 0.9373718283509354
+            },
+            "distinct_2": {
+                "mean": 0.9974162297742885,
+                "lower_95_ci": 0.9965288951407661,
+                "upper_95_ci": 0.9982789444412009
+            },
+            "repetition_rate": {
+                "mean": 0.06719738459784792,
+                "lower_95_ci": 0.0626281716490647,
+                "upper_95_ci": 0.07135254818226609
+            },
+            "language_mixing_ratio": {
+                "mean": 0.018011075571314122,
+                "lower_95_ci": 0.013498054435351195,
+                "upper_95_ci": 0.023356990650642874
+            },
+            "cmi": {
+                "mean": 1.8011075571314124,
+                "lower_95_ci": 1.3498054435351197,
+                "upper_95_ci": 2.3356990650642877
+            },
+            "unique_sentence_ratio": {
+                "mean": 0.9328026154021521,
+                "lower_95_ci": 0.928647451817734,
+                "upper_95_ci": 0.9373718283509354
+            },
+            "avg_word_length": {
+                "mean": 4.317118826820072,
+                "lower_95_ci": 4.282007523614405,
+                "upper_95_ci": 4.352094992222208
+            },
+            "generation_length": {
+                "mean": 30.906,
+                "lower_95_ci": 30.40785,
+                "upper_95_ci": 31.32805
+            }
+        }
+    },
+    "between_model_comparison": {
+        "distinct_1": {
+            "qwen_minus_smol_mean_difference": -0.014685380871722997,
+            "lower_95_ci": -0.020565327535151348,
+            "upper_95_ci": -0.00878520572968083,
+            "significant_at_95_percent": true
+        },
+        "distinct_2": {
+            "qwen_minus_smol_mean_difference": -0.0004352407143246584,
+            "lower_95_ci": -0.0016610154810721423,
+            "upper_95_ci": 0.0007884614168223167,
+            "significant_at_95_percent": false
+        },
+        "repetition_rate": {
+            "qwen_minus_smol_mean_difference": 0.014685380871722914,
+            "lower_95_ci": 0.00878520572968099,
+            "upper_95_ci": 0.020565327535151483,
+            "significant_at_95_percent": true
+        },
+        "language_mixing_ratio": {
+            "qwen_minus_smol_mean_difference": 0.0013579387985323543,
+            "lower_95_ci": -0.004892831181914733,
+            "upper_95_ci": 0.007603518499149938,
+            "significant_at_95_percent": false
+        },
+        "cmi": {
+            "qwen_minus_smol_mean_difference": 0.1357938798532352,
+            "lower_95_ci": -0.4892831181914729,
+            "upper_95_ci": 0.7603518499149934,
+            "significant_at_95_percent": false
+        },
+        "unique_sentence_ratio": {
+            "qwen_minus_smol_mean_difference": -0.014685380871722997,
+            "lower_95_ci": -0.020565327535151348,
+            "upper_95_ci": -0.00878520572968083,
+            "significant_at_95_percent": true
+        },
+        "avg_word_length": {
+            "qwen_minus_smol_mean_difference": 0.1057319069481144,
+            "lower_95_ci": 0.04478120251584925,
+            "upper_95_ci": 0.16539450766664646,
+            "significant_at_95_percent": true
+        },
+        "generation_length": {
+            "qwen_minus_smol_mean_difference": 3.186,
+            "lower_95_ci": 2.6099000000000028,
+            "upper_95_ci": 3.7839999999999954,
+            "significant_at_95_percent": true
+        }
+    }
+}

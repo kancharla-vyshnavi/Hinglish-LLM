@@ -1,0 +1,15 @@
+{
+    "model": "Qwen2.5-3B",
+    "base_model": "Qwen/Qwen2.5-3B-Instruct",
+    "perplexity": 7.33972479285041,
+    "distinct_1": 0.36857307914500287,
+    "distinct_2": 0.8173410404624277,
+    "repetition_rate": 0.019189591626124138,
+    "language_mixing_ratio": 0.011627906976744186,
+    "cmi": 0.024611852567774407,
+    "average_generation_length_words": 34.092,
+    "unique_sentence_ratio": 0.9138543516873889,
+    "average_word_length": 4.393934060776722,
+    "generation_samples": 500,
+    "cmi_note": "CMI is calculated using a controlled English-word vocabulary and is intended as a descriptive automatic code-mixing measure."
+}
