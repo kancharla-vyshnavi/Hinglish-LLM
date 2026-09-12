@@ -1,0 +1,15 @@
+{
+    "model": "SmolLM2-1.7B",
+    "base_model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+    "adapter": "results/smollm2-1.7b-qlora",
+    "perplexity": 7.50223364556488,
+    "distinct_1": 0.36495888678051863,
+    "distinct_2": 0.8531645569620253,
+    "repetition_rate": 0.01865589596162352,
+    "language_mixing_ratio": 0.007643312101910828,
+    "ppl_time_seconds": 325.63810992240906,
+    "generation_time_seconds": 110.3016049861908,
+    "ppl_samples": 5000,
+    "generation_samples": 100,
+    "evaluation_time_seconds": 442.1523337364197
+}

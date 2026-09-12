@@ -1,0 +1,13 @@
+{
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "adapter": "results/qwen2.5-1.5b-qlora",
+    "test_set_size": 5000,
+    "generation_samples": 500,
+    "max_input_length": 64,
+    "max_new_tokens": 32,
+    "distinct_1": 0.952653745884319,
+    "distinct_2": 0.9958821629866522,
+    "repetition_rate": 0.047346254115681344,
+    "english_ratio": 0.9939735377797297,
+    "character_diversity": 0.2556160474014712
+}

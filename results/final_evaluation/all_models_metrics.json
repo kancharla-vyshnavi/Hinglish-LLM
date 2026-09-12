@@ -1,0 +1,62 @@
+{
+    "Qwen2.5-1.5B": {
+        "model": "Qwen2.5-1.5B",
+        "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "adapter": "results/qwen2.5-1.5b-qlora",
+        "perplexity": 8.104745080647616,
+        "distinct_1": 0.35909090909090907,
+        "distinct_2": 0.8158044343376919,
+        "repetition_rate": 0.025541304240994645,
+        "language_mixing_ratio": 0.014180374361883154,
+        "ppl_time_seconds": 252.17145824432373,
+        "generation_time_seconds": 90.54456663131714,
+        "ppl_samples": 5000,
+        "generation_samples": 100,
+        "evaluation_time_seconds": 349.3744783401489
+    },
+    "Qwen2.5-3B": {
+        "model": "Qwen2.5-3B",
+        "base_model": "Qwen/Qwen2.5-3B-Instruct",
+        "adapter": "results/qwen2.5-3b-qlora",
+        "perplexity": 7.33972479285041,
+        "distinct_1": 0.36857307914500287,
+        "distinct_2": 0.8173410404624277,
+        "repetition_rate": 0.019189591626124138,
+        "language_mixing_ratio": 0.011627906976744186,
+        "ppl_time_seconds": 578.7813093662262,
+        "generation_time_seconds": 161.5252764225006,
+        "ppl_samples": 5000,
+        "generation_samples": 100,
+        "evaluation_time_seconds": 750.9152920246124
+    },
+    "SmolLM2-1.7B": {
+        "model": "SmolLM2-1.7B",
+        "base_model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+        "adapter": "results/smollm2-1.7b-qlora",
+        "perplexity": 7.50223364556488,
+        "distinct_1": 0.36495888678051863,
+        "distinct_2": 0.8531645569620253,
+        "repetition_rate": 0.01865589596162352,
+        "language_mixing_ratio": 0.007643312101910828,
+        "ppl_time_seconds": 325.63810992240906,
+        "generation_time_seconds": 110.3016049861908,
+        "ppl_samples": 5000,
+        "generation_samples": 100,
+        "evaluation_time_seconds": 442.1523337364197
+    },
+    "Bharat-Tiny-LLM-v3": {
+        "model": "Bharat-Tiny-LLM-v3",
+        "base_model": "eulogik/Bharat-Tiny-LLM-v3",
+        "adapter": "results/bharat/checkpoint-22500",
+        "perplexity": 10.103626066055181,
+        "distinct_1": 0.35965909090909093,
+        "distinct_2": 0.8425241614553723,
+        "repetition_rate": 0.007046150916506958,
+        "language_mixing_ratio": 0.01534090909090909,
+        "ppl_time_seconds": 300.2021300792694,
+        "generation_time_seconds": 94.32009434700012,
+        "ppl_samples": 5000,
+        "generation_samples": 100,
+        "evaluation_time_seconds": 402.1737976074219
+    }
+}

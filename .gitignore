@@ -1,0 +1,16 @@
+.venv311/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Large datasets
+data/raw/
+data/interim/
+data/processed/merged_cleaned.jsonl
+
+# Model checkpoints
+results/qwen2.5-1.5b-qlora/
+results/qwen2.5-3b-qlora/
+results/smollm2-1.7b-qlora/
+results/bharat/

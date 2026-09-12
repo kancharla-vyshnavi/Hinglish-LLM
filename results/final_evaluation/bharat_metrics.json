@@ -1,0 +1,15 @@
+{
+    "model": "Bharat-Tiny-LLM-v3",
+    "base_model": "eulogik/Bharat-Tiny-LLM-v3",
+    "adapter": "results/bharat/checkpoint-22500",
+    "perplexity": 10.103626066055181,
+    "distinct_1": 0.35965909090909093,
+    "distinct_2": 0.8425241614553723,
+    "repetition_rate": 0.007046150916506958,
+    "language_mixing_ratio": 0.01534090909090909,
+    "ppl_time_seconds": 300.2021300792694,
+    "generation_time_seconds": 94.32009434700012,
+    "ppl_samples": 5000,
+    "generation_samples": 100,
+    "evaluation_time_seconds": 402.1737976074219
+}

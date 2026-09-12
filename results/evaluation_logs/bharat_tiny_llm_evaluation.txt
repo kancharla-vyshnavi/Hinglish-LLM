@@ -1,0 +1,64 @@
+================================================================================
+Bharat Tiny LLM EVALUATION
+================================================================================
+
+======================================================================
+        BHARAT TINY LLM - 5 METRIC EVALUATION
+======================================================================
+Device: cuda
+
+Loading test dataset...
+Test samples: 5000
+
+Loading trained model...
+
+
+================================================================================
+WARNINGS / STDERR
+================================================================================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights:   0%|          | 1/310 [00:00<02:44,  1.88it/s]
+Loading weights:   3%|2         | 9/310 [00:00<00:16, 18.15it/s]
+Loading weights:   5%|5         | 16/310 [00:00<00:10, 29.33it/s]
+Loading weights:   8%|8         | 26/310 [00:00<00:06, 42.11it/s]
+Loading weights:  12%|#1        | 36/310 [00:01<00:05, 54.32it/s]
+Loading weights:  15%|#5        | 47/310 [00:01<00:04, 61.32it/s]
+Loading weights:  19%|#8        | 58/310 [00:01<00:03, 72.96it/s]
+Loading weights:  22%|##2       | 69/310 [00:01<00:03, 78.52it/s]
+Loading weights:  26%|##5       | 80/310 [00:01<00:02, 80.07it/s]
+Loading weights:  29%|##9       | 91/310 [00:01<00:02, 83.62it/s]
+Loading weights:  33%|###2      | 102/310 [00:01<00:02, 86.68it/s]
+Loading weights:  36%|###5      | 111/310 [00:01<00:02, 86.53it/s]
+Loading weights:  39%|###8      | 120/310 [00:02<00:02, 64.00it/s]
+Loading weights:  42%|####1     | 130/310 [00:02<00:02, 68.65it/s]
+Loading weights:  45%|####4     | 138/310 [00:02<00:02, 68.34it/s]
+Loading weights:  48%|####7     | 148/310 [00:02<00:02, 72.71it/s]
+Loading weights:  51%|#####1    | 159/310 [00:02<00:01, 79.30it/s]
+Loading weights:  55%|#####4    | 170/310 [00:02<00:01, 86.99it/s]
+Loading weights:  58%|#####8    | 180/310 [00:02<00:01, 89.14it/s]
+Loading weights:  62%|######1   | 191/310 [00:02<00:01, 88.43it/s]
+Loading weights:  65%|######4   | 201/310 [00:02<00:01, 89.12it/s]
+Loading weights:  68%|######8   | 211/310 [00:03<00:01, 82.42it/s]
+Loading weights:  71%|#######   | 220/310 [00:03<00:01, 80.52it/s]
+Loading weights:  75%|#######4  | 232/310 [00:03<00:00, 89.44it/s]
+Loading weights:  79%|#######9  | 245/310 [00:03<00:00, 96.71it/s]
+Loading weights:  82%|########2 | 255/310 [00:03<00:00, 94.61it/s]
+Loading weights:  86%|########6 | 268/310 [00:03<00:00, 92.87it/s]
+Loading weights:  90%|######### | 280/310 [00:03<00:00, 93.19it/s]
+Loading weights:  94%|#########3| 291/310 [00:03<00:00, 91.15it/s]
+Loading weights:  97%|#########7| 301/310 [00:04<00:00, 89.85it/s]
+Loading weights: 100%|##########| 310/310 [00:04<00:00, 73.82it/s]
+W0911 23:42:58.574000 33852 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+
+Loading weights:   0%|          | 0/224 [00:00<?, ?it/s]
+Loading weights: 100%|##########| 224/224 [00:00<00:00, 4314.39it/s]
+Traceback (most recent call last):
+  File "C:\Users\Vyshnavi\OneDrive\Desktop\HindiHinglish-LLM\scripts\evaluate_bharat.py", line 62, in <module>
+    print("\u2713 Model loaded successfully")
+  File "C:\Users\Vyshnavi\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 0: character maps to <undefined>

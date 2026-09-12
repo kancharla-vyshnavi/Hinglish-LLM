@@ -1,0 +1,15 @@
+{
+    "model": "Qwen2.5-1.5B",
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "adapter": "results/qwen2.5-1.5b-qlora",
+    "perplexity": 8.104745080647616,
+    "distinct_1": 0.35909090909090907,
+    "distinct_2": 0.8158044343376919,
+    "repetition_rate": 0.025541304240994645,
+    "language_mixing_ratio": 0.014180374361883154,
+    "ppl_time_seconds": 252.17145824432373,
+    "generation_time_seconds": 90.54456663131714,
+    "ppl_samples": 5000,
+    "generation_samples": 100,
+    "evaluation_time_seconds": 349.3744783401489
+}

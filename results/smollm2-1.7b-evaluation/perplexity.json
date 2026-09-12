@@ -1,0 +1,7 @@
+{
+    "model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+    "adapter": "results/smollm2-1.7b-qlora",
+    "test_samples": 5000,
+    "average_loss": 2.0166384818961167,
+    "perplexity": 7.513027261038276
+}
