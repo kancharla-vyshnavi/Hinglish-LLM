@@ -1,0 +1,50 @@
+{
+    "Qwen2.5-1.5B": {
+        "samples_analyzed": 100,
+        "total_words": 1763,
+        "english_words": 64,
+        "non_english_words": 1699,
+        "english_word_ratio": 0.0363,
+        "non_english_word_ratio": 0.9637,
+        "code_mixed_samples": 45,
+        "code_mixed_sample_ratio": 0.45,
+        "average_language_switches": 1.09,
+        "average_cmi": 0.0721
+    },
+    "Qwen2.5-3B": {
+        "samples_analyzed": 100,
+        "total_words": 1718,
+        "english_words": 55,
+        "non_english_words": 1663,
+        "english_word_ratio": 0.032,
+        "non_english_word_ratio": 0.968,
+        "code_mixed_samples": 40,
+        "code_mixed_sample_ratio": 0.4,
+        "average_language_switches": 1,
+        "average_cmi": 0.0656
+    },
+    "SmolLM2-1.7B": {
+        "samples_analyzed": 100,
+        "total_words": 1570,
+        "english_words": 39,
+        "non_english_words": 1531,
+        "english_word_ratio": 0.0248,
+        "non_english_word_ratio": 0.9752,
+        "code_mixed_samples": 37,
+        "code_mixed_sample_ratio": 0.37,
+        "average_language_switches": 0.76,
+        "average_cmi": 0.0477
+    },
+    "Bharat-Tiny-LLM-v3": {
+        "samples_analyzed": 99,
+        "total_words": 1758,
+        "english_words": 80,
+        "non_english_words": 1678,
+        "english_word_ratio": 0.0455,
+        "non_english_word_ratio": 0.9545,
+        "code_mixed_samples": 46,
+        "code_mixed_sample_ratio": 0.4646,
+        "average_language_switches": 1.2525,
+        "average_cmi": 0.0785
+    }
+}

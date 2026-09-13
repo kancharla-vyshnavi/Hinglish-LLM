@@ -1,0 +1,46 @@
+{
+    "Qwen2.5-1.5B": {
+        "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+        "samples": 5000,
+        "total_words": 81427,
+        "total_tokens": 144986,
+        "average_fertility": 1.7893389285653474,
+        "median_fertility": 1.7692307692307692,
+        "std_fertility": 0.24952344159928366,
+        "min_fertility": 1.0,
+        "max_fertility": 5.25
+    },
+    "Qwen2.5-3B": {
+        "model_id": "Qwen/Qwen2.5-3B-Instruct",
+        "samples": 5000,
+        "total_words": 81427,
+        "total_tokens": 144986,
+        "average_fertility": 1.7893389285653474,
+        "median_fertility": 1.7692307692307692,
+        "std_fertility": 0.24952344159928366,
+        "min_fertility": 1.0,
+        "max_fertility": 5.25
+    },
+    "SmolLM2-1.7B": {
+        "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+        "samples": 5000,
+        "total_words": 81427,
+        "total_tokens": 157644,
+        "average_fertility": 1.9446373262214889,
+        "median_fertility": 1.9285714285714286,
+        "std_fertility": 0.2709568561131814,
+        "min_fertility": 1.0,
+        "max_fertility": 5.25
+    },
+    "Bharat-Tiny-LLM-v3": {
+        "model_id": "eulogik/Bharat-Tiny-LLM-v3",
+        "samples": 5000,
+        "total_words": 81427,
+        "total_tokens": 144890,
+        "average_fertility": 1.7887562515281585,
+        "median_fertility": 1.7692307692307692,
+        "std_fertility": 0.24558113049942762,
+        "min_fertility": 1.0,
+        "max_fertility": 5.25
+    }
+}

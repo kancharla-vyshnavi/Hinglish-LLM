@@ -1,0 +1,22 @@
+{
+    "Qwen2.5-1.5B": {
+        "ppl": 8.1047,
+        "trainable_pct": 1.0283,
+        "throughput": 1.105
+    },
+    "Qwen2.5-3B": {
+        "ppl": 7.3397,
+        "trainable_pct": 0.8734,
+        "throughput": 0.619
+    },
+    "SmolLM2-1.7B": {
+        "ppl": 7.5022,
+        "trainable_pct": 0.9883,
+        "throughput": 0.907
+    },
+    "Bharat-Tiny-LLM-v3": {
+        "ppl": 10.1036,
+        "trainable_pct": 0.3151,
+        "throughput": 1.06
+    }
+}

@@ -1,534 +1,302 @@
 import json
 import re
-from pathlib import Path
+import os
 from collections import Counter
 
+INPUT_FILE = "results/final_evaluation/qwen25_3b_samples.jsonl"
 
-# ============================================================
-# FILE PATHS
-# ============================================================
-
-INPUT_FILE = Path(
-    "results/final_evaluation/qwen25_3b_samples.jsonl"
-)
-
-OUTPUT_FILE = Path(
+OUTPUT_CANDIDATES = (
     "results/final_evaluation/error_analysis_candidates.jsonl"
 )
 
+OUTPUT_FREQUENCY = (
+    "results/final_evaluation/error_taxonomy_frequency.json"
+)
 
-# ============================================================
-# HELPERS
-# ============================================================
-
-def clean_text(text):
-    return re.sub(r"\s+", " ", text.strip())
-
-
-def get_words(text):
-    return re.findall(
-        r"\b[\w']+\b",
-        text.lower(),
-        flags=re.UNICODE
-    )
+MAX_EXAMPLES_PER_CATEGORY = 3
 
 
 # ============================================================
-# 1. TOKEN CORRUPTION
+# ERROR DETECTORS
 # ============================================================
 
-def has_token_corruption(text):
-
-    patterns = [
+def detect_token_corruption(text):
+    """
+    Detect obvious Unicode replacement/corruption characters.
+    """
+    corruption_chars = [
         "�",
-        "Ã",
-        "Â",
-        "ðŸ",
-        "â€",
-        "tsmallgt",
-        "smallgt",
+        "\ufffd"
     ]
 
-    return any(
-        pattern in text
-        for pattern in patterns
-    )
+    return any(char in text for char in corruption_chars)
 
 
-# ============================================================
-# 2. EMOJI REPETITION
-# ============================================================
+def detect_truncation(text):
+    """
+    Detect outputs that appear unfinished.
 
-def has_emoji_repetition(text):
+    Conservative rules:
+    - very short output
+    - ends with incomplete punctuation/structure
+    - unfinished sentence markers
+    """
 
-    symbols = re.findall(
-        r"[^\w\s.,!?;:'\"()\[\]{}#/@$%&*+=<>_\-]",
-        text,
-        flags=re.UNICODE
-    )
+    text = text.strip()
 
-    if len(symbols) < 5:
-        return False
+    if len(text.split()) < 5:
+        return True
 
-    counts = Counter(symbols)
+    # Common unfinished endings
+    unfinished_patterns = [
+        r"\.\.\.$",
+        r"…$",
+        r":$",
+        r",$",
+        r"\band$",
+        r"\bor$",
+        r"\bbut$",
+        r"\bki$",
+        r"\bke$",
+        r"\bhai ki$",
+        r"\bto$"
+    ]
 
-    # Same emoji/symbol repeated at least 5 times
-    return counts.most_common(1)[0][1] >= 5
-
-
-# ============================================================
-# 3. TRUE WORD / PHRASE REPETITION
-# ============================================================
-
-def has_real_repetition(text):
-
-    words = get_words(text)
-
-    if len(words) < 10:
-        return False
-
-    # --------------------------------------------------------
-    # A. Same word repeated immediately
-    # --------------------------------------------------------
-    #
-    # Example:
-    # "very very good"
-    #
-    # --------------------------------------------------------
-
-    for i in range(len(words) - 1):
-
-        if words[i] == words[i + 1]:
-
+    for pattern in unfinished_patterns:
+        if re.search(pattern, text, re.IGNORECASE):
             return True
-
-
-    # --------------------------------------------------------
-    # B. Same 3-word sequence repeated immediately
-    # --------------------------------------------------------
-    #
-    # Example:
-    #
-    # "main ghar ja main ghar ja"
-    #
-    # --------------------------------------------------------
-
-    for i in range(len(words) - 5):
-
-        first = tuple(
-            words[i:i + 3]
-        )
-
-        second = tuple(
-            words[i + 3:i + 6]
-        )
-
-        if first == second:
-
-            return True
-
-
-    # --------------------------------------------------------
-    # C. Same 4-word sequence repeated immediately
-    # --------------------------------------------------------
-    #
-    # Example:
-    #
-    # "main ghar ja raha main ghar ja raha"
-    #
-    # --------------------------------------------------------
-
-    for i in range(len(words) - 7):
-
-        first = tuple(
-            words[i:i + 4]
-        )
-
-        second = tuple(
-            words[i + 4:i + 8]
-        )
-
-        if first == second:
-
-            return True
-
-
-    # --------------------------------------------------------
-    # D. Strong repeated 2-word phrase
-    #
-    # Require the same phrase to appear at least THREE times.
-    # This prevents normal conversational repetition from
-    # being incorrectly classified.
-    # --------------------------------------------------------
-
-    phrase_counts = Counter(
-        tuple(words[i:i + 2])
-        for i in range(len(words) - 1)
-    )
-
-    for phrase, count in phrase_counts.items():
-
-        if count >= 3:
-
-            return True
-
 
     return False
 
 
-# ============================================================
-# 4. LIKELY TRUNCATION
-# ============================================================
+def detect_word_repetition(text):
+    """
+    Detect meaningful repeated words or phrases.
 
-def likely_truncated(text):
+    Requires repeated consecutive words/phrases,
+    avoiding normal repeated function words.
+    """
 
-    text = clean_text(text)
-
-    if len(text) < 35:
-        return False
-
-    # Proper sentence ending
-    if text[-1] in ".!?。！？":
-
-        return False
-
-    # Remove trailing symbols/emojis
-    stripped = re.sub(
-        r"[^\w\s]+$",
-        "",
-        text,
-        flags=re.UNICODE
-    ).strip()
-
-    if not stripped:
-        return False
-
-    words = get_words(stripped)
+    words = re.findall(r"\b[\w'-]+\b", text.lower())
 
     if len(words) < 8:
         return False
 
-    last_word = words[-1].lower()
+    # Repeated 3-word phrase
+    for i in range(len(words) - 5):
+        phrase1 = words[i:i + 3]
+        phrase2 = words[i + 3:i + 6]
 
-    # Strong incomplete endings only
-    strong_endings = {
-        "ki",
-        "ke",
-        "ka",
-        "ko",
-        "se",
-        "mein",
-        "me",
-        "par",
-        "aur",
-        "lekin",
-        "kyunki",
-        "because",
-        "but",
-        "and",
-        "with",
-        "for",
-        "from",
-        "about",
-        "how",
-        "what",
-        "which",
-        "where",
-        "when",
-        "to",
-    }
-
-    if last_word in strong_endings:
-
-        return True
-
-    # Strong multi-word endings
-    lower = stripped.lower()
-
-    strong_phrases = [
-        "tumhare liye",
-        "mere liye",
-        "aapke liye",
-        "mere saath",
-        "aapke saath",
-        "iske baare",
-        "uske baare",
-        "aisa lagta",
-        "how to",
-        "what to",
-        "ways to",
-        "tips on",
-        "because of",
-    ]
-
-    for phrase in strong_phrases:
-
-        if lower.endswith(phrase):
-
+        if phrase1 == phrase2:
             return True
 
-    # Single-character final word
-    if len(last_word) == 1:
+    # Repeated 2-word phrase
+    for i in range(len(words) - 3):
+        phrase1 = words[i:i + 2]
+        phrase2 = words[i + 2:i + 4]
 
+        if phrase1 == phrase2:
+            return True
+
+    # Same meaningful word repeated 3+ times
+    stopwords = {
+        "hai", "ka", "ki", "ke", "ko",
+        "yeh", "yah", "to", "aur",
+        "the", "is", "a", "an", "of",
+        "in", "on", "for"
+    }
+
+    counts = Counter(words)
+
+    for word, count in counts.items():
+        if (
+            count >= 3
+            and len(word) >= 4
+            and word not in stopwords
+        ):
+            return True
+
+    return False
+
+
+def detect_emoji_repetition(text):
+    """
+    Detect excessive repeated emoji usage.
+    """
+
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F300-\U0001FAFF"
+        "\U00002700-\U000027BF"
+        "\U0001F1E6-\U0001F1FF"
+        "]+"
+    )
+
+    emojis = emoji_pattern.findall(text)
+
+    if not emojis:
+        return False
+
+    emoji_chars = []
+
+    for group in emojis:
+        emoji_chars.extend(list(group))
+
+    counts = Counter(emoji_chars)
+
+    # Same emoji repeated 3+ times
+    return any(count >= 3 for count in counts.values())
+
+
+def detect_style_deviation(text):
+    """
+    Conservative detection of outputs that strongly
+    deviate from conversational Hinglish style.
+
+    This is heuristic and should be reported as such.
+    """
+
+    text_lower = text.lower()
+
+    # Excessive meta/system-like language
+    meta_patterns = [
+        "as an ai language model",
+        "i cannot fulfill",
+        "i am unable to",
+        "here is a detailed explanation",
+        "as a large language model"
+    ]
+
+    if any(pattern in text_lower for pattern in meta_patterns):
+        return True
+
+    # Very long repetitive formatting
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+    if len(lines) >= 8:
         return True
 
     return False
 
 
 # ============================================================
-# 5. STYLE DEVIATION
+# LOAD SAMPLES
 # ============================================================
 
-def has_style_deviation(text):
+samples = []
 
-    hashtags = re.findall(
-        r"#\w+",
-        text
-    )
+with open(INPUT_FILE, "r", encoding="utf-8") as f:
 
-    return len(hashtags) >= 4
+    for line in f:
+
+        line = line.strip()
+
+        if not line:
+            continue
+
+        record = json.loads(line)
+
+        text = record.get("generated_text", "").strip()
+
+        if text:
+            samples.append({
+                "id": record.get("id"),
+                "generated_text": text
+            })
 
 
-# ============================================================
-# CLASSIFY
-# ============================================================
+print("=" * 70)
+print("AUTOMATIC ERROR ANALYSIS")
+print("=" * 70)
 
-def classify(text):
-
-    categories = []
-
-    if has_token_corruption(text):
-
-        categories.append(
-            "Token corruption"
-        )
-
-    if has_emoji_repetition(text):
-
-        categories.append(
-            "Emoji repetition"
-        )
-
-    if has_real_repetition(text):
-
-        categories.append(
-            "Word/phrase repetition"
-        )
-
-    if has_style_deviation(text):
-
-        categories.append(
-            "Style deviation"
-        )
-
-    if likely_truncated(text):
-
-        categories.append(
-            "Likely truncation / unfinished output"
-        )
-
-    if not categories:
-
-        categories.append(
-            "No obvious error"
-        )
-
-    return categories
+print(f"\nTotal generated samples: {len(samples)}")
 
 
 # ============================================================
-# LOAD DATA
+# DETECT ERRORS
 # ============================================================
 
-if not INPUT_FILE.exists():
-
-    raise FileNotFoundError(
-        f"Input file not found: {INPUT_FILE}"
-    )
-
-
-with open(
-    INPUT_FILE,
-    "r",
-    encoding="utf-8"
-) as f:
-
-    samples = [
-        json.loads(line)
-        for line in f
-        if line.strip()
-    ]
+detectors = {
+    "Token corruption": detect_token_corruption,
+    "Likely truncation / unfinished output": detect_truncation,
+    "Word/phrase repetition": detect_word_repetition,
+    "Emoji repetition": detect_emoji_repetition,
+    "Style deviation": detect_style_deviation
+}
 
 
-# ============================================================
-# ANALYSIS
-# ============================================================
-
-results = []
-
-for sample in samples:
-
-    text = clean_text(
-        sample.get(
-            "generated_text",
-            ""
-        )
-    )
-
-    results.append({
-        "id": sample["id"],
-        "generated_text": text,
-        "error_categories": classify(text)
-    })
-
-
-# ============================================================
-# CATEGORY COUNTS
-# ============================================================
+category_records = {
+    category: []
+    for category in detectors
+}
 
 category_counts = Counter()
 
-for item in results:
 
-    for category in item["error_categories"]:
+for sample in samples:
 
-        category_counts[category] += 1
+    text = sample["generated_text"]
 
+    detected_categories = []
 
-print()
-print("=" * 70)
-print("AUTOMATIC ERROR ANALYSIS - FINAL")
-print("=" * 70)
+    for category, detector in detectors.items():
 
-print(
-    f"Total samples: {len(samples)}"
-)
+        try:
+            detected = detector(text)
 
-print()
-print("CATEGORY COUNTS")
-print("-" * 70)
+        except Exception:
+            detected = False
 
+        if detected:
 
-categories = [
-    "No obvious error",
-    "Likely truncation / unfinished output",
-    "Word/phrase repetition",
-    "Token corruption",
-    "Emoji repetition",
-    "Style deviation",
-]
+            detected_categories.append(category)
 
+            category_counts[category] += 1
 
-for category in categories:
-
-    count = category_counts.get(
-        category,
-        0
-    )
-
-    percentage = (
-        count / len(samples) * 100
-    )
-
-    print(
-        f"{category:40s}: "
-        f"{count:3d} "
-        f"({percentage:.1f}%)"
-    )
+            category_records[category].append({
+                "id": sample["id"],
+                "generated_text": text,
+                "error_categories": [category]
+            })
 
 
 # ============================================================
-# SELECT EXACTLY 3 PER ERROR CATEGORY
+# SELECT REPRESENTATIVE EXAMPLES AUTOMATICALLY
 # ============================================================
 
-selected = []
+selected_examples = []
 
-used_ids = set()
+for category in detectors:
 
-selection_categories = [
-    "Token corruption",
-    "Likely truncation / unfinished output",
-    "Word/phrase repetition",
-    "Emoji repetition",
-    "Style deviation",
-]
+    examples = category_records[category]
 
+    # Deterministic selection:
+    # first 3 automatically detected examples
+    selected = examples[:MAX_EXAMPLES_PER_CATEGORY]
 
-for category in selection_categories:
-
-    # Prefer examples containing ONLY this category
-    candidates = [
-        item
-        for item in results
-        if item["id"] not in used_ids
-        and item["error_categories"] == [category]
-    ]
-
-    # Sort by length so examples are informative
-    candidates.sort(
-        key=lambda x: len(
-            x["generated_text"]
-        ),
-        reverse=True
-    )
-
-    # If fewer than 3 clean examples exist,
-    # use multi-category examples.
-    if len(candidates) < 3:
-
-        candidates = [
-            item
-            for item in results
-            if item["id"] not in used_ids
-            and category in item["error_categories"]
-        ]
-
-        candidates.sort(
-            key=lambda x: len(
-                x["generated_text"]
-            ),
-            reverse=True
-        )
-
-    chosen = 0
-
-    for item in candidates:
-
-        if item["id"] in used_ids:
-            continue
-
-        selected.append(item)
-
-        used_ids.add(
-            item["id"]
-        )
-
-        chosen += 1
-
-        if chosen == 3:
-            break
+    selected_examples.extend(selected)
 
 
 # ============================================================
-# SAVE
+# SAVE REPRESENTATIVE EXAMPLES
 # ============================================================
 
-OUTPUT_FILE.parent.mkdir(
-    parents=True,
+os.makedirs(
+    os.path.dirname(OUTPUT_CANDIDATES),
     exist_ok=True
 )
 
 with open(
-    OUTPUT_FILE,
+    OUTPUT_CANDIDATES,
     "w",
     encoding="utf-8"
 ) as f:
 
-    for item in selected:
+    for record in selected_examples:
 
         f.write(
             json.dumps(
-                item,
+                record,
                 ensure_ascii=False
             )
             + "\n"
@@ -536,93 +304,85 @@ with open(
 
 
 # ============================================================
-# DISPLAY
+# FREQUENCY ANALYSIS
 # ============================================================
 
-print()
-print("=" * 70)
-print("SELECTED REPRESENTATIVE EXAMPLES")
-print("=" * 70)
+frequency = []
 
+for category in detectors:
 
-for i, item in enumerate(
-    selected,
-    start=1
-):
+    count = category_counts[category]
 
-    print()
-
-    print(
-        f"Example {i}"
+    percentage = (
+        count / len(samples) * 100
+        if samples
+        else 0
     )
 
-    print(
-        f"ID       : "
-        f"{item['id']}"
-    )
-
-    print(
-        f"Category : "
-        f"{', '.join(item['error_categories'])}"
-    )
-
-    print(
-        f"Output   : "
-        f"{item['generated_text']}"
-    )
+    frequency.append({
+        "category": category,
+        "count": count,
+        "percentage_of_all_samples": round(
+            percentage,
+            2
+        ),
+        "representative_examples_selected": min(
+            count,
+            MAX_EXAMPLES_PER_CATEGORY
+        )
+    })
 
 
-# ============================================================
-# VERIFY DISTRIBUTION
-# ============================================================
-
-print()
-print("=" * 70)
-print("REPRESENTATIVE EXAMPLE DISTRIBUTION")
-print("=" * 70)
+frequency_output = {
+    "total_samples": len(samples),
+    "automatic_detection": True,
+    "categories": frequency
+}
 
 
-distribution = Counter()
+with open(
+    OUTPUT_FREQUENCY,
+    "w",
+    encoding="utf-8"
+) as f:
 
-for item in selected:
-
-    # Determine the category used for selection
-    for category in selection_categories:
-
-        if category in item["error_categories"]:
-
-            distribution[category] += 1
-
-            break
-
-
-for category in selection_categories:
-
-    print(
-        f"{category:40s}: "
-        f"{distribution.get(category, 0)}"
+    json.dump(
+        frequency_output,
+        f,
+        indent=4,
+        ensure_ascii=False
     )
 
 
 # ============================================================
-# FINAL CHECK
+# PRINT RESULTS
 # ============================================================
 
-print()
-print("=" * 70)
-print("FINAL ERROR ANALYSIS COMPLETED")
-print("=" * 70)
+print("\nError frequency across ALL samples:")
+print("-" * 70)
 
-print(
-    f"Total samples: {len(samples)}"
-)
+for item in frequency:
 
-print(
-    f"Selected examples: {len(selected)}"
-)
+    print(
+        f"{item['category']:<40}"
+        f"{item['count']:>4} "
+        f"({item['percentage_of_all_samples']:.2f}%)"
+    )
 
-print(
-    f"Saved to: {OUTPUT_FILE}"
-)
+
+print("\nRepresentative examples selected:")
+print("-" * 70)
+
+for category in detectors:
+
+    print(
+        f"{category:<40}"
+        f"{min(category_counts[category], MAX_EXAMPLES_PER_CATEGORY)}"
+    )
+
+
+print("\nSaved:")
+print(OUTPUT_CANDIDATES)
+print(OUTPUT_FREQUENCY)
 
 print("=" * 70)

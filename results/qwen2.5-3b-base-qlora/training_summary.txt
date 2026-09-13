@@ -1,0 +1,28 @@
+Qwen2.5-3B Base QLoRA Ablation
+==================================================
+Model: Qwen/Qwen2.5-3B
+Dataset: 370K Hinglish corpus
+Train samples: 360000
+Validation samples: 5000
+
+Training configuration:
+4-bit NF4 + double quantization
+FP16 compute
+LoRA r=8
+LoRA alpha=16
+LoRA dropout=0.05
+Batch size=4
+Gradient accumulation=4
+Effective batch size=16
+Learning rate=2e-4
+Weight decay=0.01
+Cosine scheduler
+Max steps=22500
+Seed=42
+
+Evaluation results:
+eval_loss: 10.543962478637695
+eval_runtime: 208.9059
+eval_samples_per_second: 23.934
+eval_steps_per_second: 5.984
+epoch: 1.0

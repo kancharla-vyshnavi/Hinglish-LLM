@@ -1,0 +1,17 @@
+{
+    "model": "Qwen2.5-3B-Base",
+    "base_model": "Qwen/Qwen2.5-3B",
+    "adapter": "results/qwen2.5-3b-base-qlora",
+    "test_samples": 5000,
+    "perplexity": 38541.35222805016,
+    "average_nll": 10.55948702770599,
+    "distinct_1": 0.40542746378290145,
+    "distinct_2": 0.8816913143095189,
+    "repetition_rate": 0.0045823786711101855,
+    "language_mixing_ratio": 0.002652519893899204,
+    "average_generation_length": 49.01,
+    "ppl_time_seconds": 239.74083495140076,
+    "generation_time_seconds": 759.4313340187073,
+    "generation_samples": 100,
+    "generation_throughput_samples_per_second": 0.13167747434231714
+}

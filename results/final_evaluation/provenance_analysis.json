@@ -1,0 +1,65 @@
+{
+    "train": {
+        "total_samples": 360000,
+        "sources": {
+            "COMI-LINGUA-TN": {
+                "count": 3611,
+                "percentage": 1.0030555555555554
+            },
+            "HINMIX": {
+                "count": 61470,
+                "percentage": 17.075000000000003
+            },
+            "HinGE": {
+                "count": 715,
+                "percentage": 0.19861111111111113
+            },
+            "Hinglish-Conversations": {
+                "count": 294204,
+                "percentage": 81.72333333333334
+            }
+        }
+    },
+    "validation": {
+        "total_samples": 5000,
+        "sources": {
+            "COMI-LINGUA-TN": {
+                "count": 49,
+                "percentage": 0.98
+            },
+            "HINMIX": {
+                "count": 887,
+                "percentage": 17.740000000000002
+            },
+            "HinGE": {
+                "count": 7,
+                "percentage": 0.13999999999999999
+            },
+            "Hinglish-Conversations": {
+                "count": 4057,
+                "percentage": 81.14
+            }
+        }
+    },
+    "test": {
+        "total_samples": 5000,
+        "sources": {
+            "COMI-LINGUA-TN": {
+                "count": 70,
+                "percentage": 1.4000000000000001
+            },
+            "HINMIX": {
+                "count": 848,
+                "percentage": 16.96
+            },
+            "HinGE": {
+                "count": 6,
+                "percentage": 0.12
+            },
+            "Hinglish-Conversations": {
+                "count": 4076,
+                "percentage": 81.52000000000001
+            }
+        }
+    }
+}

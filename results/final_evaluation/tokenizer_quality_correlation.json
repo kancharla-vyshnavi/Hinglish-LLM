@@ -1,0 +1,45 @@
+{
+    "models": {
+        "Qwen2.5-1.5B": {
+            "average_fertility": 1.7893389285653474,
+            "perplexity": 8.104745080647616,
+            "distinct_1": 0.35909090909090907,
+            "distinct_2": 0.8158044343376919,
+            "repetition_rate": 0.025541304240994645,
+            "language_mixing_ratio": 0.014180374361883154
+        },
+        "Qwen2.5-3B": {
+            "average_fertility": 1.7893389285653474,
+            "perplexity": 7.33972479285041,
+            "distinct_1": 0.36857307914500287,
+            "distinct_2": 0.8173410404624277,
+            "repetition_rate": 0.019189591626124138,
+            "language_mixing_ratio": 0.011627906976744186
+        },
+        "SmolLM2-1.7B": {
+            "average_fertility": 1.9446373262214889,
+            "perplexity": 7.50223364556488,
+            "distinct_1": 0.36495888678051863,
+            "distinct_2": 0.8531645569620253,
+            "repetition_rate": 0.01865589596162352,
+            "language_mixing_ratio": 0.007643312101910828
+        },
+        "Bharat-Tiny-LLM-v3": {
+            "average_fertility": 1.7887562515281585,
+            "perplexity": 10.103626066055181,
+            "distinct_1": 0.35965909090909093,
+            "distinct_2": 0.8425241614553723,
+            "repetition_rate": 0.007046150916506958,
+            "language_mixing_ratio": 0.01534090909090909
+        }
+    },
+    "pearson_correlations": {
+        "fertility_vs_perplexity": -0.40202724664793643,
+        "fertility_vs_distinct_1": 0.279996169765431,
+        "fertility_vs_distinct_2": 0.7495692364492038,
+        "fertility_vs_repetition": 0.09396144969497233,
+        "fertility_vs_language_mixing": -0.8917483409126392
+    },
+    "number_of_models": 4,
+    "note": "Correlations are exploratory model-level correlations based on four models and should not be interpreted as causal evidence."
+}

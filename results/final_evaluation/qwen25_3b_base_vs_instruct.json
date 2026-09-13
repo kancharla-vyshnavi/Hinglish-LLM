@@ -1,0 +1,39 @@
+{
+    "instruct_model": "Qwen2.5-3B-Instruct + QLoRA",
+    "base_model": "Qwen2.5-3B-Base + QLoRA",
+    "same_dataset": true,
+    "same_training_steps": 22500,
+    "seed": 42,
+    "metrics": {
+        "perplexity": {
+            "instruct": 7.33972479285041,
+            "base": 38541.35222805016,
+            "absolute_difference": 38534.012503257305,
+            "percentage_change": 525006.2310346173
+        },
+        "distinct_1": {
+            "instruct": 0.36857307914500287,
+            "base": 0.40542746378290145,
+            "absolute_difference": 0.036854384637898585,
+            "percentage_change": 9.999206866489413
+        },
+        "distinct_2": {
+            "instruct": 0.8173410404624277,
+            "base": 0.8816913143095189,
+            "absolute_difference": 0.06435027384709113,
+            "percentage_change": 7.873124027968011
+        },
+        "repetition_rate": {
+            "instruct": 0.019189591626124138,
+            "base": 0.0045823786711101855,
+            "absolute_difference": -0.014607212955013951,
+            "percentage_change": -76.12049927695244
+        },
+        "language_mixing_ratio": {
+            "instruct": 0.011627906976744186,
+            "base": 0.002652519893899204,
+            "absolute_difference": -0.008975387082844982,
+            "percentage_change": -77.18832891246686
+        }
+    }
+}

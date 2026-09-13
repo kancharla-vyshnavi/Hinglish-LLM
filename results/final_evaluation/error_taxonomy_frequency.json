@@ -1,0 +1,36 @@
+{
+    "total_samples": 500,
+    "automatic_detection": true,
+    "categories": [
+        {
+            "category": "Token corruption",
+            "count": 13,
+            "percentage_of_all_samples": 2.6,
+            "representative_examples_selected": 3
+        },
+        {
+            "category": "Likely truncation / unfinished output",
+            "count": 26,
+            "percentage_of_all_samples": 5.2,
+            "representative_examples_selected": 3
+        },
+        {
+            "category": "Word/phrase repetition",
+            "count": 14,
+            "percentage_of_all_samples": 2.8,
+            "representative_examples_selected": 3
+        },
+        {
+            "category": "Emoji repetition",
+            "count": 18,
+            "percentage_of_all_samples": 3.6,
+            "representative_examples_selected": 3
+        },
+        {
+            "category": "Style deviation",
+            "count": 0,
+            "percentage_of_all_samples": 0.0,
+            "representative_examples_selected": 0
+        }
+    ]
+}
